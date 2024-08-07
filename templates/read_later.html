@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Read Later List</h1>
+
+<div class="mt-4">
+    {% for article in articles %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ article.title }}</h5>
+            <p class="card-text">{{ article.summary }}</p>
+            <p class="card-text"><small class="text-muted">Source: {{ article.source }} | Published on {{ article.publication_date }}</small></p>
+            <a href="{{ article.url }}" class="btn btn-primary" target="_blank">Read full article</a>
+            <form method="POST" action="{{ url_for('remove_from_read_later_route') }}" style="display:inline;">
+                <input type="hidden" name="article_id" value="{{ article.id }}">
+                <button type="submit" class="btn btn-danger">Remove</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

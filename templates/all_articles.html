@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Filtered Articles</h1>
+
+{% if articles %}
+<div class="mt-4">
+    {% for article in articles %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">{{ article.title }}</h5>
+            <p class="card-text">{{ article.summary }}</p>
+            <p class="card-text"><small class="text-muted">Published on {{ article.publication_date }} by {{ article.source }}</small></p>
+            <a href="{{ article.url }}" class="btn btn-primary" target="_blank">Read full article</a>
+            <form method="POST" action="{{ url_for('add_to_read_later_route') }}" style="display:inline;">
+                <input type="hidden" name="article_id" value="{{ article.id }}">
+                <button type="submit" class="btn btn-secondary">Read Later</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p>No articles found matching the selected criteria.</p>
+{% endif %}
+{% endblock %}
